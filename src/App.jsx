@@ -7,7 +7,12 @@ export const App = () => {
   const [query, setQuery] = useState('');
 
   const filteredMovies = moviesFromServer.filter(movie => {
-    return movie.title.toLowerCase().includes(query.toLowerCase());
+    const normalizeQuery = query.toLowerCase().trim();
+
+    return (
+      movie.title.toLowerCase().includes(normalizeQuery) ||
+      movie.description.toLowerCase().includes(normalizeQuery)
+    );
   });
 
   return (
@@ -26,7 +31,7 @@ export const App = () => {
                 className="input"
                 placeholder="Type search word"
                 value={query}
-                onChange={e => setQuery(e.target.value)}
+                onChange={event => setQuery(event.target.value)}
               />
             </div>
           </div>
